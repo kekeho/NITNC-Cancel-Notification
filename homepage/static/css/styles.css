@@ -1,0 +1,44 @@
+.header-image {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.row.header-row {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.col.header-col {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  position: relative;
+}
+
+.header-text {
+  position: absolute;
+  font-weight: 600;
+  color: rgb(58,58,58);
+  font-size: 3rem;
+  top: 50%;
+  left: 10%;
+}
+
+.service-title p {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.row.service {
+  padding: 2rem;
+  width: 100%;
+}
+
+.col.details-title {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
