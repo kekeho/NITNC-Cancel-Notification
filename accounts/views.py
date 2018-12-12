@@ -22,7 +22,7 @@ def signup(request):
             if low_grade_class:
                 LowGradeClass.objects.get(low_grade_class=low_grade_class
                                           ).user.add(user)
-            
+
             login(request, user)
             return redirect('/')
         else:
