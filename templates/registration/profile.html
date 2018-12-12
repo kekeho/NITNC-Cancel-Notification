@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}プロフィール{% endblock title %}
+
+{% block contents %}
+<div class="container profile profile-view" id="profile">
+    <form>
+        <div class="form-row profile-row">
+            <div class="col-md-10 col-lg-9 offset-md-0">
+                <h1>Kekeho</h1>
+                <hr>
+                <div class="form-group"><label>Email </label>
+                    <input class="form-control" type="email" required="" name="email" value="{{ email }}">
+                </div>
+                <div class="form-group"><label>学年</label>
+                    <select class="form-control" name="grade" id="grade">
+                        {% for i in range_5 %}
+                        {% if grade is i %}
+                        <option selected="" value="{{ i }}">{{ i }}年</option>
+                        {% else %}
+                        <option value="{{ i }}">{{ i }}年</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group"><label>学科</label>
+                    <select class="form-control" name="major" id="major">
+                        {% for item in majors_dict %}
+                        {% if item.0 is major %}
+                        <option selected="" value="{{ item.0 }}">{{ item.1 }}</option>
+                        {% else %}
+                        <option value="{{ item.0 }}">{{ item.1 }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group"><label>低学年クラス</label>
+                    <select class="form-control" name="class" id="class">
+                        {% if not class %}
+                        <option selected="" value="0">なし</option>
+                        {% else %}
+                        <option value="0">なし</option>
+                        {% endif %}
+                        {% for i in range_5 %}
+                        {% if class %}
+                            {% if class == i %}
+                            <option selected="" value="{{i}}">{{i}}組</option>
+                            {% else %}
+                            <option value="{{i}}">{{i}}組</option>
+                            {% endif %}
+                        {% else %}
+                        <option value="{{i}}">{{i}}組</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <hr>
+                <div class="form-row">
+                    <div class="col-md-12 content-right"><button class="btn btn-primary form-btn" type="submit">SAVE </button><button class="btn btn-danger form-btn" type="reset">CANCEL </button></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock contents %}

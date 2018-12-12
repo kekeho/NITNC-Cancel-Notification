@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .models import User, Grade, Major, LowGradeClass
 
 
@@ -22,7 +23,7 @@ def signup(request):
             if low_grade_class:
                 LowGradeClass.objects.get(low_grade_class=low_grade_class
                                           ).user.add(user)
-            
+
             login(request, user)
             return redirect('/')
         else:
@@ -57,3 +58,26 @@ def login_func(request):
 def logout_func(request):
     logout(request)
     return redirect('/')
+
+
+@login_required
+def profile(request):
+    if request.method == 'GET':
+        user = request.user
+        context = {}
+        context['name'] = user.username
+        context['email'] = user.email
+        context['grade'] = user.grade_set.all()[0].grade
+        context['major'] = user.major_set.all()[0].initial
+
+        if context['grade'] <= 2:
+            lgc = user.low_grade_class_set.all()[0].low_grade_class
+            context['class'] = int(lgc)
+
+        context['range_5'] = range(1, 5+1)
+        items = ['機械工学科', '電気電子工学科', '電子制御工学科',
+                 '電子情報工学科', '環境都市工学科']
+        keys = ['M', 'E', 'S', 'J', 'C']
+        context['majors_dict'] = zip(keys, items)
+
+        return render(request, 'registration/profile.html', context=context)

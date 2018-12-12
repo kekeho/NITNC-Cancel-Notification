@@ -28,6 +28,10 @@ class UserManager(UserManager):
         return self._create_user(email, password, **extra_fields)
 
 
+MAJORS_DIC = {'M': '機械工学科', 'E': '電気電子工学科', 'S': '電子制御工学科',
+              'J': '電子情報工学科', 'C': '環境都市工学科'}
+
+
 class User(AbstractUser):
     username = models.CharField(_('username'), max_length=150, blank=True)
     email = models.EmailField(_('email address'), unique=True)
@@ -52,9 +56,7 @@ class Major(models.Model):
     user = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
-        dic = {'M': '機械工学科', 'E': '電気電子工学科', 'S': '電子制御工学科',
-               'J': '電子情報工学科', 'C': '環境都市工学科'}
-        return dic[self.initial]
+        return MAJORS_DIC[self.initial]
 
 
 class LowGradeClass(models.Model):
