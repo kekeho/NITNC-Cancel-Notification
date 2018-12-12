@@ -36,3 +36,30 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+
+class Grade(models.Model):
+    grade = models.IntegerField(primary_key=True)
+    user = models.ManyToManyField(User, blank=True)
+
+    def __str__(self):
+        return f"{self.grade}年"
+
+
+class Major(models.Model):
+    # M/E/S/J/C
+    initial = models.CharField(max_length=1)
+    user = models.ManyToManyField(User, blank=True)
+
+    def __str__(self):
+        dic = {'M': '機械工学科', 'E': '電気電子工学科', 'S': '電子制御工学科',
+               'J': '電子情報工学科', 'C': '環境都市工学科'}
+        return dic[self.initial]
+
+
+class LowGradeClass(models.Model):
+    low_grade_class = models.IntegerField(primary_key=True)
+    user = models.ManyToManyField(User, blank=True)
+
+    def __str__(self):
+        return f"{self.low_grade_class}組"

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .models import User
+from .models import User, Grade, Major, LowGradeClass
 
 
 def signup(request):
@@ -8,10 +8,21 @@ def signup(request):
         username = request.POST['name']
         email = request.POST['email']
         password = request.POST['password']
+
+        grade = int(request.POST['grade'])
+        major = request.POST['major']
+        low_grade_class = int(request.POST['class'])
+
         already_user = User.objects.filter(email=email)
         if len(already_user) == 0:
             user = User.objects.create_user(username=username, email=email,
                                             password=password)
+            Grade.objects.get(grade=grade).user.add(user)
+            Major.objects.get(initial=major).user.add(user)
+            if low_grade_class:
+                LowGradeClass.objects.get(low_grade_class=low_grade_class
+                                          ).user.add(user)
+            
             login(request, user)
             return redirect('/')
         else:
