@@ -68,6 +68,9 @@ class CancelObject:
             # 高学年
             self.low_grade_class = None
 
+        # 科目名の正規化
+        self.subject = self.subject.split('[')[0]
+
 
 class SupplementaryObject(CancelObject):
     pass
@@ -122,4 +125,4 @@ def just_for_you(grade: int, major: str, low_grade_class=None):
 
 
 if __name__ == "__main__":
-    myself = just_for_you(grade=1, major='M', low_grade_class=5)
+    myself = just_for_you(grade=4, major='J', low_grade_class=None)
