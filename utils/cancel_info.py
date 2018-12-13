@@ -4,21 +4,41 @@ import requests
 
 
 class CancelObject:
-    def __init__(self, subject: str, major: str or None, grade: int,
-                 low_grade_class: int or None, date: time, koma: str,
-                 place: str, supplementary_date: time,
-                 supplementary_koma: str, teacher: str, memo: str):
-        self.subject = subject
-        self.major = major
-        self.grade = grade
-        self.low_grade_class = low_grade_class
-        self.date = date
-        self.koma = koma
-        self.place = place
-        self.supplementary_date = supplementary_date
-        self.supplementary_koma = supplementary_koma
-        self.teacher = teacher
-        self.memo = memo
+    def __init__(self, cancel_info: dict):
+        try:
+            self.cancel_date = cancel_info['休講日']
+        except KeyError:
+            self.cancel_date = None
+
+        try:
+            self.supplementary_date = cancel_info['補講日']
+        except KeyError:
+            self.supplementary_date = None
+
+        try:
+            self.subject = cancel_info['科目名']
+        except KeyError:
+            self.subject = None
+
+        try:
+            self.place = cancel_info['教室']
+        except KeyError:
+            self.place = None
+
+        try:
+            self.major = cancel_info['学科']
+        except KeyError:
+            self.major = None
+
+        try:
+            self.teacher = cancel_info['教員']
+        except KeyError:
+            self.teacher = None
+
+        try:
+            self.memo = cancel_info['備考']
+        except KeyError:
+            self.memo = None
 
 
 class SupplementaryObject(CancelObject):
@@ -42,10 +62,22 @@ def get_info(grade: int):
 
     # 休講及び補講情報を全件取得
     cancels = soup.find_all('table', class_='cancel')
+
+    returns = []
     for cancel in cancels:
-        print('=======')
-        print(cancel)
+        cancel_info_dict = {}
+        for tr in cancel.find_all('tr'):
+            for th, td in zip(tr.find_all('th'), tr.find_all('td')):
+                key = th.text
+                value = td.text
+                cancel_info_dict[key] = value
+
+        # 休講情報オブジェクトを生成
+        cancel = CancelObject(cancel_info_dict)
+        returns.append(cancel)
+
+    return returns
 
 
 if __name__ == "__main__":
-    get_info(1)
+    get_info(4)
