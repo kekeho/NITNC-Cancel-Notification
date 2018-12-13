@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url('accounts/', include('accounts.urls')),
     url('', include('homepage.urls')),
+    url('info/', include('info.urls')),
 ]
