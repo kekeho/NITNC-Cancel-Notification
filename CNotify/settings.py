@@ -123,3 +123,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = ['static']
 
 AUTH_USER_MODEL = 'accounts.User'
+LOGIN_URL = 'login'

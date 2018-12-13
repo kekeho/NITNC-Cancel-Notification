@@ -23,11 +23,10 @@
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="nav navbar-nav mr-auto">
                         <li class="nav-item" role="presentation"><a class="nav-link" href="/info">あなたの休講・補講情報</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="/account">アカウント・メール設定</a></li>
                     </ul>
                     <span class="navbar-text actions">
                         {% if user.id %}
-                        <a class="btn btn-light action-button" role="button" href="/accounts/profile/">{{ user.username }}の設定</a>
+                        <a class="btn btn-light action-button" role="button" href="{% url 'profile' %}">{{ user.username }}の設定</a>
                         {% else %}
                         <a href="{% url 'login' %}" class="login">ログイン</a>
                         <a class="btn btn-light action-button" role="button" href="{% url 'signup' %}">アカウント登録</a>
