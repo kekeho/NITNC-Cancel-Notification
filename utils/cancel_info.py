@@ -58,18 +58,22 @@ class CancelObject:
 
         # 低学年クラスの正規化
         if self.grade <= 3:
+            # 低学年
             if self.subject.split('[')[1].lstrip(' ')[-3] == '組':
                 lgc_zen = self.subject.split('[')[1].lstrip(' ')[-4]
                 self.low_grade_class = int(lgc_zen)
             else:
                 self.low_grade_class = None
+        else:
+            # 高学年
+            self.low_grade_class = None
 
 
 class SupplementaryObject(CancelObject):
     pass
 
 
-def get_info(grade: int):
+def get_by_grade(grade: int):
     if grade == 1:
         url_grade = '1st'
     elif grade == 2:
@@ -103,5 +107,19 @@ def get_info(grade: int):
     return returns
 
 
+def just_for_you(grade: int, major: str, low_grade_class=None):
+    all_cancel_in_grade = get_by_grade(grade)
+    returns = []
+    for cancel in all_cancel_in_grade:
+        if cancel.major is None and cancel.low_grade_class is None:
+            returns.append(cancel)
+        elif cancel.major == major:
+            returns.append(cancel)
+        elif low_grade_class and cancel.low_grade_class == low_grade_class:
+            returns.append(cancel)
+
+    return returns
+
+
 if __name__ == "__main__":
-    get_info(2)
+    myself = just_for_you(grade=1, major='M', low_grade_class=5)
