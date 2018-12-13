@@ -15,6 +15,7 @@
                     {% if message %}
                     {{ message }}
                     {% else %}
+                    <input id="url" name="url" type="url" hidden="" value="">
                     <div class="form-group has-feedback">
                         <label for="from_email">Email</label>
                         <input class="form-control" type="email" name="email" required="" placeholder="メールアドレスを入力" id="from_email">
@@ -37,4 +38,9 @@
         </form>
     </div>
 </section>
+
+<script type="text/javascript">
+    const url = document.URL;
+    document.getElementById('url').value = url;
+</script>
 {% endblock contents %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from urllib import parse
 from .models import User, Grade, Major, LowGradeClass
 
 
@@ -42,6 +43,11 @@ def login_func(request):
         user = authenticate(request=request, email=email, password=password)
         if user is not None:
             login(request, user)
+            query_string = parse.urlparse(request.POST['url']).query
+            query_dict = parse.parse_qs(query_string)
+            if 'next' in list(query_dict.keys()):
+                next_url = query_dict['next'][0]
+                return redirect(next_url)
             return redirect('/')
         else:
             context = {'login_error': 'ログインに失敗しました'}
