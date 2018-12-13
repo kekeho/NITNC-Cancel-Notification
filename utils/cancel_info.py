@@ -1,4 +1,3 @@
-from datetime import time
 from bs4 import BeautifulSoup
 import requests
 import zenhan
@@ -71,6 +70,18 @@ class CancelObject:
         # 科目名の正規化
         self.subject = self.subject.split('[')[0]
 
+    def __eq__(self, other):
+        v1 = self.cancel_date == other.cancel_date
+        v2 = self.supplementary_date == other.supplementary_date
+        v3 = self.subject == other.subject
+        v4 = self.grade == other.grade
+        v5 = self.major == other.major
+        v6 = self.low_grade_class == other.low_grade_class
+        if (v1 and v2 and v3 and v4 and v5 and v6):
+            return True
+        else:
+            return False
+
 
 class SupplementaryObject(CancelObject):
     pass
@@ -105,7 +116,12 @@ def get_by_grade(grade: int):
 
         # 休講情報オブジェクトを生成
         cancel = CancelObject(cancel_info_dict)
-        returns.append(cancel)
+
+        # 重複していない場合returnリストに追加
+        if cancel not in returns:
+            returns.append(cancel)
+        else:
+            pass
 
     return returns
 
@@ -125,4 +141,4 @@ def just_for_you(grade: int, major: str, low_grade_class=None):
 
 
 if __name__ == "__main__":
-    myself = just_for_you(grade=4, major='J', low_grade_class=None)
+    myself = just_for_you(grade=3, major='J', low_grade_class=None)
