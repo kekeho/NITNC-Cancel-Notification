@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}あなたの補講・休講{% endblock title %}
+
+{% block contents %}
+    <div class="row" style="padding: 4rem;">
+        {% for cancel in cancels %}
+        <div class="col-sm-6 col-md-4 col-lg-4 col-xl-3">
+            <div class="pricingTable purple">
+                <div class="pricingTable-header">
+                    <p>休講日: {{ cancel.cancel_date }}</p>
+                    <p>補講日: {{ cancel.supplementary_date }}</p>
+                </div>
+                <div class="pricing-plans">
+                    <span class="price-value"><span>科目名: {{ cancel.subject }}</span></span>
+                </div>
+                <div class="pricingContent">
+                    <ul>
+                        <li>教室: {{ cancel.place }}</li>
+                        <li>学科: {{ cancel.major }}</li>
+                        <li>教員: {{ cancel.teacher }}</li>
+                        <li>備考: {{ cancel.memo }}</li>
+                    </ul>
+                </div>
+                <div class="pricingTable-sign-up"></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock contents %}

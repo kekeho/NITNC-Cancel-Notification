@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth.decorators import login_required
+from utils import cancel_info
 
 
 @login_required
@@ -12,4 +13,7 @@ def own_info(request):
     else:
         lgc = None
 
-    return HttpResponse(f"{grade} {major} {lgc}")
+    cancels = cancel_info.just_for_you(grade, major, lgc)
+    context = {'cancels': cancels}
+
+    return render(request, 'info.html', context=context)
