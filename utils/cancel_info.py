@@ -1,10 +1,16 @@
 from datetime import time
 from bs4 import BeautifulSoup
 import requests
+import zenhan
+
+majorname_to_initial = {'機械工学科': 'M', '電気電子工学科': 'E', '電子制御工学科': 'S',
+                        '電子情報工学科': 'J', '環境都市工学科': 'C'}
 
 
 class CancelObject:
     def __init__(self, cancel_info: dict):
+        self.grade = cancel_info['学年']
+
         try:
             self.cancel_date = cancel_info['休講日']
         except KeyError:
@@ -40,6 +46,24 @@ class CancelObject:
         except KeyError:
             self.memo = None
 
+        # 学科の正規化
+        if self.major in majorname_to_initial:
+            self.major = majorname_to_initial[self.major]
+        else:
+            if self.subject.split('[')[1].lstrip(' ')[-3] == '科':
+                major_initial_zen = self.subject.split('[')[1].lstrip(' ')[-4]
+                self.major = zenhan.z2h(major_initial_zen)
+            else:
+                self.major = None
+
+        # 低学年クラスの正規化
+        if self.grade <= 3:
+            if self.subject.split('[')[1].lstrip(' ')[-3] == '組':
+                lgc_zen = self.subject.split('[')[1].lstrip(' ')[-4]
+                self.low_grade_class = int(lgc_zen)
+            else:
+                self.low_grade_class = None
+
 
 class SupplementaryObject(CancelObject):
     pass
@@ -65,7 +89,7 @@ def get_info(grade: int):
 
     returns = []
     for cancel in cancels:
-        cancel_info_dict = {}
+        cancel_info_dict = {'学年': grade}
         for tr in cancel.find_all('tr'):
             for th, td in zip(tr.find_all('th'), tr.find_all('td')):
                 key = th.text
@@ -80,4 +104,4 @@ def get_info(grade: int):
 
 
 if __name__ == "__main__":
-    get_info(4)
+    get_info(2)
