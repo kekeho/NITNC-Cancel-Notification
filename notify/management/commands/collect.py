@@ -56,4 +56,19 @@ class Command(BaseCommand):
                                 major=cancel.major,
                                 low_grade_class=cancel.low_grade_class,
                                 teacher=cancel.teacher, memo=cancel.memo)
+            
+            # 重複するものを検索
+            exist = Cancel.objects.filter(grade=cancel.grade,
+                                          cancel_date=cancel.cancel_date,
+                                          supplementary_date=cancel.supplementary_date,
+                                          subject=cancel.subject,
+                                          place=cancel.place,
+                                          major=cancel.major,
+                                          low_grade_class=cancel.low_grade_class,
+                                          teacher=cancel.teacher, memo=cancel.memo)
+            
+            if exist:
+                # 重複がある場合は無視
+                continue
+
             new_cancel.save()
