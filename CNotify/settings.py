@@ -25,7 +25,7 @@ SECRET_KEY = 'f@*h(!(z+z631b5qzf=_g06e0%h5jv&5q1_qd^f^3h1o_g9s75'
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = ['test-cnotify.herokuapp.com']
+ALLOWED_HOSTS = ['test-cnotify.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -122,7 +122,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ['static']
-STATIC_ROOT = 'tekitou'
+STATIC_ROOT = '.'
 
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_URL = 'login'
