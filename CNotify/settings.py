@@ -122,6 +122,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ['static']
+STATIC_ROOT = 'tekitou'
 
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_URL = 'login'
