@@ -87,3 +87,29 @@ def profile(request):
         context['majors_dict'] = zip(keys, items)
 
         return render(request, 'registration/profile.html', context=context)
+
+    elif request.method == 'POST':
+        email = request.POST['email']
+        grade = int(request.POST['grade'])
+        major = request.POST['major']
+        lgc = int(request.POST['class'])
+
+        user = request.user
+        user.email = email
+        user.save()
+
+        # Del
+        user.grade_set.clear()
+        user.major_set.clear()
+        try:
+            user.low_grade_class_set.clear()
+        except AttributeError:
+            pass
+
+        # Add
+        Grade.objects.get(grade=grade).user.add(user)
+        Major.objects.get(initial=major).user.add(user)
+        if lgc != 0:
+            LowGradeClass.objects.get(low_grade_class=lgc).user.add(user)  
+
+        return redirect('/accounts/profile/')

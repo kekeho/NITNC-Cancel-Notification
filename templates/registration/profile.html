@@ -4,7 +4,8 @@
 
 {% block contents %}
 <div class="container profile profile-view" id="profile">
-    <form>
+    <form action="{% url 'profile' %}" method="POST">
+    {% csrf_token %}
         <div class="form-row profile-row">
             <div class="col-md-10 col-lg-9 offset-md-0">
                 <h1>Kekeho</h1><a href="{% url 'logout' %}">ログアウト</a>
