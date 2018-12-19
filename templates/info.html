@@ -6,24 +6,33 @@
 <div class="row" style="padding: 4rem;">
     {% if cancels %}
         {% for cancel in cancels %}
-        <div class="col-sm-6 col-md-4 col-lg-4 col-xl-3">
+        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <div class="pricingTable purple">
-                <div class="pricing-plans">
+                <div class="row pricing-plans">
                     <span class="price-value"><span>{{ cancel.subject }}</span></span>
                 </div>
-                <div class="pricingTable-header">
-                    <p>休講日: {{ cancel.cancel_date }}</p>
-                    <p>補講日: {{ cancel.supplementary_date }}</p>
+                <div class="row pricingContent">
+                    <div class="col-6 largelist vcol-left">
+                        <ul>
+                            <li>
+                                休講日: {{ cancel.cancel_date.month }}/{{ cancel.cancel_date.day }}<br/>
+                                {{ cancel.cancel_time }}
+                            </li>
+                            <li>
+                                補講日: {{ cancel.supplementary_date.month }}/{{ cancel.supplementary_date.day }}<br/>
+                                {{ cancel.cancel_time }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-6 normal-list vcol-right">
+                        <ul>
+                            <li>教室: {{ cancel.place }}</li>
+                            <li>学科: {{ cancel.major }}</li>
+                            <li>教員: {{ cancel.teacher }}</li>
+                            <li>備考: {{ cancel.memo }}</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="pricingContent">
-                    <ul>
-                        <li>教室: {{ cancel.place }}</li>
-                        <li>学科: {{ cancel.major }}</li>
-                        <li>教員: {{ cancel.teacher }}</li>
-                        <li>備考: {{ cancel.memo }}</li>
-                    </ul>
-                </div>
-                <div class="pricingTable-sign-up"></div>
             </div>
         </div>
         {% endfor %}
