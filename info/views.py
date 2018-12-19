@@ -9,7 +9,7 @@ def own_info(request):
     grade = user.grade_set.all()[0].grade
     major = user.major_set.all()[0].initial
     if grade <= 2:
-        lgc = user.low_grade_class_set.all()[0].low_grade_class
+        lgc = user.lowgradeclass_set.all()[0].low_grade_class
     else:
         lgc = None
 

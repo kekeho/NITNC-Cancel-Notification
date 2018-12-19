@@ -77,7 +77,7 @@ def profile(request):
         context['major'] = user.major_set.all()[0].initial
 
         if context['grade'] <= 2:
-            lgc = user.low_grade_class_set.all()[0].low_grade_class
+            lgc = user.lowgradeclass_set.all()[0].low_grade_class
             context['class'] = int(lgc)
 
         context['range_5'] = range(1, 5+1)
@@ -95,6 +95,28 @@ def profile(request):
         lgc = int(request.POST['class'])
 
         user = request.user
+
+        if grade <= 2 and not lgc:
+            # バリデーションエラー
+            context = {}
+            context['name'] = user.username
+            context['email'] = user.email
+            context['grade'] = user.grade_set.all()[0].grade
+            context['major'] = user.major_set.all()[0].initial
+            if context['grade'] <= 2:
+                lgc = user.low_grade_class_set.all()[0].low_grade_class
+                context['class'] = int(lgc)
+
+            context['range_5'] = range(1, 5+1)
+            items = ['機械工学科', '電気電子工学科', '電子制御工学科',
+                     '電子情報工学科', '環境都市工学科']
+            keys = ['M', 'E', 'S', 'J', 'C']
+            context['majors_dict'] = zip(keys, items)
+
+            context['message'] = '低学年はクラス情報が必要です'
+            return render(request, 'registration/profile.html',
+                          context=context)
+
         user.email = email
         user.save()
 

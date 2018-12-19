@@ -57,6 +57,9 @@
                 </div>
                 <hr>
                 <div class="form-row">
+                    {% if message %}
+                    <div class="col-12">{{ message }}</div>                    
+                    {% endif %}
                     <div class="col-md-12 content-right">
                         <button class="btn btn-primary form-btn" type="submit">SAVE </button>
                         <button class="btn btn-danger form-btn" type="reset">CANCEL </button>
