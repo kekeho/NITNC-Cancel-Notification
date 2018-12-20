@@ -44,8 +44,16 @@
 }
 
 .largelist li {
-  font-size: 2rem;
+  font-size: 1.7rem;
   height: 50%;
+}
+
+.pricingContent li p {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  padding-left: 1rem;
+  margin-bottom: 0;
 }
 
 .normal-list ul {

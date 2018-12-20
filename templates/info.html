@@ -15,21 +15,33 @@
                     <div class="col-6 largelist vcol-left">
                         <ul>
                             <li>
-                                休講日: {{ cancel.cancel_date.month }}/{{ cancel.cancel_date.day }}<br/>
+                                <p>休講日:</p> {{ cancel.cancel_date.month }}/{{ cancel.cancel_date.day }}<br/>
                                 {{ cancel.cancel_time }}
                             </li>
                             <li>
-                                補講日: {{ cancel.supplementary_date.month }}/{{ cancel.supplementary_date.day }}<br/>
+                                <p>補講日:</p>{{ cancel.supplementary_date.month }}/{{ cancel.supplementary_date.day }}<br/>
                                 {{ cancel.cancel_time }}
                             </li>
                         </ul>
                     </div>
                     <div class="col-6 normal-list vcol-right">
                         <ul>
-                            <li>教室: {{ cancel.place }}</li>
-                            <li>学科: {{ cancel.major }}</li>
-                            <li>教員: {{ cancel.teacher }}</li>
-                            <li>備考: {{ cancel.memo }}</li>
+                            <li>
+                                <p>教室:</p>
+                                {{ cancel.place }}
+                            </li>
+                            <li>
+                                <p>学科:</p> 
+                                {{ cancel.major }}
+                            </li>
+                            <li>
+                                <p>教員:</p>
+                                {{ cancel.teacher }}
+                            </li>
+                            <li>
+                                <p>備考:</p>
+                                {{ cancel.memo }}
+                            </li>
                         </ul>
                     </div>
                 </div>
