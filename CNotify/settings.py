@@ -150,6 +150,15 @@ LOGIN_URL = 'login'
 
 DEBUG = False
 
+# Using sendgrid.com
+EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+try:
+    SENDGRID_API_KEY = os.environ["SENDGRID_API"]
+except KeyError:
+    pass
+
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+
 try:
     from .local_settings import *
 except ImportError:

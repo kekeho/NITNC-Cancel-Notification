@@ -25,6 +25,7 @@
 }
 
 .pricing-plans {
+  margin: 0;
   padding: 25px 0;
 }
 
@@ -34,6 +35,51 @@
   color: #fff;
   display: inline-block;
   position: relative;
+  text-align: center;
+}
+
+.largelist ul {
+  padding: 0;
+  height: 100%;
+}
+
+.largelist li {
+  font-size: 1.7rem;
+  height: 50%;
+}
+
+.pricingContent li p {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  padding-left: 1rem;
+  margin-bottom: 0;
+}
+
+.normal-list ul {
+  height: 100%;
+}
+
+.normal-list li {
+  height: 25%;
+}
+
+.vcol-left {
+  padding-right: 0 !important;
+}
+
+.vcol-right {
+  padding-left: 0 !important;
+}
+
+.vcol-right ul {
+  padding: 0 !important;
+  margin: 0;
+}
+
+.vcol-left ul {
+  padding: 0 !important;
+  margin: 0;
 }
 
 .price-value i {
@@ -58,6 +104,7 @@
 
 .pricingContent ul {
   padding: 0 15px;
+  width: 100%;
   margin-bottom: 0;
   list-style: none;
 }

@@ -70,6 +70,9 @@ class CancelObject:
         # 科目名の正規化
         self.subject = self.subject.split('[')[0]
 
+        self.cancel_time = ''
+        self.supplementary_time = ''
+
     def __eq__(self, other):
         v1 = self.cancel_date == other.cancel_date
         v2 = self.supplementary_date == other.supplementary_date
