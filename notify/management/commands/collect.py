@@ -1,6 +1,7 @@
 from django.core.management import BaseCommand
 from utils import cancel_info
 from django.utils.timezone import datetime
+from django.core.mail import send_mail
 from notify.models import Cancel
 
 
@@ -38,9 +39,40 @@ def date_normalize(cancel: Cancel):
                                                  day=int(day))
             cancel.supplementary_time = time[:-1]
 
-            
-
     return cancel
+
+
+def send_upload_email(cancel: Cancel):
+    if cancel.low_grade_class is None:
+        lgc = ''
+    else:
+        lgc = str(cancel.low_grade_class) + '組'
+
+    if cancel.major is None:
+        major = ''
+    else:
+        major = cancel.major + '科'
+
+    subject = f'【更新】{cancel.subject}の休講・補講'
+    message = f"""NITNC 休講・補講サービスです。休講及び補講情報が更新されましたので通知します。
+
+    科目名: {cancel.subject}
+    対象: {cancel.grade}年{lgc}{major}
+    休講日: {cancel.cancel_date.month}/{cancel.cancel_date.day} {cancel.cancel_time}
+    補講日: {cancel.supplementary_date.month}/{cancel.supplementary_date.day} {cancel.supplementary_time}
+    場所: {cancel.place}
+    学科: {major}
+    教員: {cancel.teacher}
+    備考: {cancel.memo}
+    """
+
+    from_email = "notice@nitnc-cancel.kekeho.com"
+
+    recipient_list = [
+        '15316@g.nagano-nct.ac.jp'
+    ]
+
+    send_mail(subject, message, from_email, recipient_list)
 
 
 class Command(BaseCommand):
@@ -62,7 +94,7 @@ class Command(BaseCommand):
                                 major=cancel.major,
                                 low_grade_class=cancel.low_grade_class,
                                 teacher=cancel.teacher, memo=cancel.memo)
-            
+
             # 重複するものを検索
             exist = Cancel.objects.filter(grade=cancel.grade,
                                           cancel_date=cancel.cancel_date,
@@ -74,10 +106,10 @@ class Command(BaseCommand):
                                           major=cancel.major,
                                           low_grade_class=cancel.low_grade_class,
                                           teacher=cancel.teacher, memo=cancel.memo)
-            
+
             if exist:
                 # 重複がある場合は無視
                 continue
             else:
-                # send_upload_email(new_cancel)
+                send_upload_email(new_cancel)
                 new_cancel.save()
