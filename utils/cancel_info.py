@@ -12,36 +12,50 @@ class CancelObject:
 
         try:
             self.cancel_date = cancel_info['休講日']
+            if self.cancel_date == '':
+                self.cancel_date == None
         except KeyError:
             self.cancel_date = None
 
         try:
             self.supplementary_date = cancel_info['補講日']
+            if self.supplementary_date == '':
+                self.supplementary_date = None
         except KeyError:
             self.supplementary_date = None
 
         try:
             self.subject = cancel_info['科目名']
+            if self.subject == '':
+                self.subject == None
         except KeyError:
             self.subject = None
 
         try:
             self.place = cancel_info['教室']
+            if self.place == '':
+                self.place = None
         except KeyError:
             self.place = None
 
         try:
             self.major = cancel_info['学科']
+            if self.major == '':
+                self.major = None
         except KeyError:
             self.major = None
 
         try:
             self.teacher = cancel_info['教員']
+            if self.teacher == '':
+                self.teacher = None
         except KeyError:
             self.teacher = None
 
         try:
             self.memo = cancel_info['備考']
+            if self.memo == '':
+                self.memo = None
         except KeyError:
             self.memo = None
 
